@@ -49,19 +49,13 @@ const csvRow = groupList[0];
 /** Object から、Map の生成 => Map は、key の順序が保証されている */
 const csvRowMap = new Map(Object.entries(csvRow));
 
-const csvHeader = [];
-
 // Mapから配列を作成して、CSV の HeaderList(KeyList)を作成する
-Array.from(csvRowMap).forEach((keyValList) => {
-  csvHeader.push(keyValList[0]);
-});
+const csvHeader = Array.from(csvRowMap).map((keyValList) => keyValList[0]);
 console.log("csvHeader", csvHeader);
 
-/** CSVデータを作成 */
+// CSVデータを作成する
 const csvData = convertToCSV(groupList, csvHeader);
 console.log(csvData);
 
 // CSV・Download
 downloadCSV(csvData, "robotama2");
-
-// 参考・引用: [JavaScriptで配列形式のJSONをCSVとしてダウンロードする方法](https://zenn.dev/yui/articles/32b02c23e70dbc)

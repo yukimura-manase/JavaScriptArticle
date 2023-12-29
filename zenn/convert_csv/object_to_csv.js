@@ -19,10 +19,7 @@ const groupList = [
 const convertToCSV = (objArray) => {
   const array = typeof objArray !== "object" ? JSON.parse(objArray) : objArray;
 
-  /**
-   * 1. Objectの Key を headerとして取り出す
-   * => Object.keys() は、順序の保証がないので要注意
-   */
+  /** 1. Objectの Key を headerとして取り出して、結合する */
   let str =
     `${Object.keys(array[0])
       .map((value) => `"${value}"`)
@@ -40,9 +37,10 @@ const convertToCSV = (objArray) => {
 
 /** Download・処理 */
 const downloadCSV = (data, name) => {
-  /** Blob Object を作成する Type. CSV */
+  /** 1. Blob Object を作成する Type. CSV */
   const blob = new Blob([data], { type: "text/csv" });
   console.log("blob", blob);
+  /** 2. Blob Object(Type.CSVファイル)のURLを作成する */
   const url = window.URL.createObjectURL(blob);
   console.log("url", url);
   const a = document.createElement("a");
