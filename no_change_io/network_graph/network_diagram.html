@@ -1,0 +1,317 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <script src="lib/bindings/utils.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css"
+      integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js"
+      integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <center>
+      <h1></h1>
+    </center>
+
+    <!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+      crossorigin="anonymous"
+    ></script>
+
+    <center>
+      <h1></h1>
+    </center>
+    <style type="text/css">
+      #mynetwork {
+        width: 100%;
+        height: 600px;
+        background-color: #ffffff;
+        border: 1px solid lightgray;
+        position: relative;
+        float: left;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card" style="width: 100%">
+      <div id="mynetwork" class="card-body"></div>
+    </div>
+
+    <script type="text/javascript">
+      // initialize global variables.
+      var edges;
+      var nodes;
+      var allNodes;
+      var allEdges;
+      var nodeColors;
+      var originalNodes;
+      var network;
+      var container;
+      var options, data;
+      var filter = {
+        item: "",
+        property: "",
+        value: [],
+      };
+
+      // This method is responsible for drawing the graph, returns the drawn network
+      function drawGraph() {
+        var container = document.getElementById("mynetwork");
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([
+          {
+            color: "pink",
+            id: "000m.and.s000",
+            label: "000m.and.s000",
+            shape: "dot",
+            size: 40,
+          },
+          {
+            color: "lightblue",
+            id: "\u0026MEDICAL",
+            label: "\u0026MEDICAL",
+            shape: "dot",
+            size: 30,
+          },
+          {
+            color: "lightblue",
+            id: "LEGO",
+            label: "LEGO",
+            shape: "dot",
+            size: 30,
+          },
+          {
+            color: "lightblue",
+            id: "MAIMO \u65c5\u306b\u3064\u3044\u3066\u306e\u60c5\u5831\u306f\u304a\u4efb\u305b\u2728",
+            label:
+              "MAIMO \u65c5\u306b\u3064\u3044\u3066\u306e\u60c5\u5831\u306f\u304a\u4efb\u305b\u2728",
+            shape: "dot",
+            size: 30,
+          },
+          {
+            color: "lightblue",
+            id: "MUJI\u7121\u5370\u826f\u54c1",
+            label: "MUJI\u7121\u5370\u826f\u54c1",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "nu\u30ea\u30ce\u30d9\u30fc\u30b7\u30e7\u30f3",
+            label: "nu\u30ea\u30ce\u30d9\u30fc\u30b7\u30e7\u30f3",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "HARIO",
+            label: "HARIO",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "HI(NY) Design",
+            label: "HI(NY) Design",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "STAUB \u30b9\u30c8\u30a6\u30d6",
+            label: "STAUB \u30b9\u30c8\u30a6\u30d6",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "Disney",
+            label: "Disney",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "Present",
+            label: "Present",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "Sanrio",
+            label: "Sanrio",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "\u30e6\u30cb\u30af\u30ed\u516c\u5f0f",
+            label: "\u30e6\u30cb\u30af\u30ed\u516c\u5f0f",
+            shape: "dot",
+            size: 8,
+          },
+          {
+            color: "lightblue",
+            id: "\u3057\u307e\u3080\u3089",
+            label: "\u3057\u307e\u3080\u3089",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "\u795e\u6238\u30ec\u30bf\u30b9 - \u30d7\u30c1\u30d7\u30e9\u30d5\u30a1\u30c3\u30b7\u30e7\u30f3\u901a\u8ca9 -",
+            label:
+              "\u795e\u6238\u30ec\u30bf\u30b9 - \u30d7\u30c1\u30d7\u30e9\u30d5\u30a1\u30c3\u30b7\u30e7\u30f3\u901a\u8ca9 -",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "GU(\u30b8\u30fc\u30e6\u30fc)",
+            label: "GU(\u30b8\u30fc\u30e6\u30fc)",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "ONE PEACE | \u30ef\u30f3\u30d4\u30fc\u30b9",
+            label: "ONE PEACE | \u30ef\u30f3\u30d4\u30fc\u30b9",
+            shape: "dot",
+            size: 4,
+          },
+          {
+            color: "lightblue",
+            id: "OOFOS",
+            label: "OOFOS",
+            shape: "dot",
+            size: 4,
+          },
+        ]);
+        edges = new vis.DataSet([
+          { from: "000m.and.s000", to: "\u0026MEDICAL", width: 1 },
+          { from: "000m.and.s000", to: "LEGO", width: 1 },
+          {
+            from: "000m.and.s000",
+            to: "MAIMO \u65c5\u306b\u3064\u3044\u3066\u306e\u60c5\u5831\u306f\u304a\u4efb\u305b\u2728",
+            width: 1,
+          },
+          {
+            from: "\u0026MEDICAL",
+            to: "MUJI\u7121\u5370\u826f\u54c1",
+            width: 0.0144,
+          },
+          {
+            from: "\u0026MEDICAL",
+            to: "nu\u30ea\u30ce\u30d9\u30fc\u30b7\u30e7\u30f3",
+            width: 0.0144,
+          },
+          { from: "\u0026MEDICAL", to: "HARIO", width: 0.0144 },
+          { from: "\u0026MEDICAL", to: "HI(NY) Design", width: 0.0122 },
+          {
+            from: "\u0026MEDICAL",
+            to: "STAUB \u30b9\u30c8\u30a6\u30d6",
+            width: 0.0122,
+          },
+          { from: "LEGO", to: "Disney", width: 0.0256 },
+          { from: "LEGO", to: "Present", width: 0.0256 },
+          { from: "LEGO", to: "Sanrio", width: 0.0256 },
+          {
+            from: "LEGO",
+            to: "\u30e6\u30cb\u30af\u30ed\u516c\u5f0f",
+            width: 0.0256,
+          },
+          { from: "LEGO", to: "\u3057\u307e\u3080\u3089", width: 0.0211 },
+          {
+            from: "MAIMO \u65c5\u306b\u3064\u3044\u3066\u306e\u60c5\u5831\u306f\u304a\u4efb\u305b\u2728",
+            to: "\u30e6\u30cb\u30af\u30ed\u516c\u5f0f",
+            width: 0.0211,
+          },
+          {
+            from: "MAIMO \u65c5\u306b\u3064\u3044\u3066\u306e\u60c5\u5831\u306f\u304a\u4efb\u305b\u2728",
+            to: "\u795e\u6238\u30ec\u30bf\u30b9 - \u30d7\u30c1\u30d7\u30e9\u30d5\u30a1\u30c3\u30b7\u30e7\u30f3\u901a\u8ca9 -",
+            width: 0.0189,
+          },
+          {
+            from: "MAIMO \u65c5\u306b\u3064\u3044\u3066\u306e\u60c5\u5831\u306f\u304a\u4efb\u305b\u2728",
+            to: "GU(\u30b8\u30fc\u30e6\u30fc)",
+            width: 0.0189,
+          },
+          {
+            from: "MAIMO \u65c5\u306b\u3064\u3044\u3066\u306e\u60c5\u5831\u306f\u304a\u4efb\u305b\u2728",
+            to: "ONE PEACE | \u30ef\u30f3\u30d4\u30fc\u30b9",
+            width: 0.0189,
+          },
+          {
+            from: "MAIMO \u65c5\u306b\u3064\u3044\u3066\u306e\u60c5\u5831\u306f\u304a\u4efb\u305b\u2728",
+            to: "OOFOS",
+            width: 0.0189,
+          },
+        ]);
+
+        nodeColors = {};
+        allNodes = nodes.get({ returnType: "Object" });
+        for (nodeId in allNodes) {
+          nodeColors[nodeId] = allNodes[nodeId].color;
+        }
+        allEdges = edges.get({ returnType: "Object" });
+        // adding nodes and edges to the graph
+        data = { nodes: nodes, edges: edges };
+
+        var options = {
+          configure: {
+            enabled: false,
+          },
+          edges: {
+            color: {
+              inherit: true,
+            },
+            smooth: {
+              enabled: true,
+              type: "dynamic",
+            },
+          },
+          interaction: {
+            dragNodes: true,
+            hideEdgesOnDrag: false,
+            hideNodesOnDrag: false,
+          },
+          physics: {
+            enabled: true,
+            stabilization: {
+              enabled: true,
+              fit: true,
+              iterations: 1000,
+              onlyDynamicEdges: false,
+              updateInterval: 50,
+            },
+          },
+        };
+
+        network = new vis.Network(container, data, options);
+
+        return network;
+      }
+      drawGraph();
+    </script>
+  </body>
+</html>
