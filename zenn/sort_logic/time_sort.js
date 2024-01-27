@@ -1,20 +1,14 @@
-/**
- * NOTE: 並び替え Box (Sort Select Box)
- * 1. 最新登録順(日付が新しい順)
- *    - create_time で 送付先リストを Sort する
- *    - Default値
- * 2. 日付が古い順
- */
+/** 1. 並び替えたい 対象の DataSet (送付先リスト) */
 const addressList = [
   {
     user_id: "1000020339",
     city: "渋谷区",
-    full_name: "ロボ ロボ玉",
+    full_name: "ロボ ロボたま",
     address_line1: "",
     address_line2: null,
     building: "",
     district: "ハチ公前",
-    first_name: "ロボ玉",
+    first_name: "ロボたま",
     last_name: "ロボ",
     input_type: 2,
     post_code: "111-0078",
@@ -84,7 +78,7 @@ const addressList = [
   },
   {
     user_id: "1000020339",
-    city: "上尾市",
+    city: "さいたま市",
     full_name: "ぷる たま",
     address_line1: "",
     address_line2: null,
@@ -103,10 +97,10 @@ const addressList = [
   },
 ];
 
-/** 最新登録順(昇順) で、Sortされた配列 */
+/** 最新登録順(降順)で、Sortされた配列 */
 const timeSortListAsc = [];
 
-// 最新登録順(昇順): addressList の create_time を基準に Sort して timeSortList に pushする
+// 2. addressList の create_time を基準に「最新登録順(降順)」で Sort して timeSortList に pushする
 addressList
   .sort((a, b) => {
     return a.create_time > b.create_time ? -1 : 1;
@@ -114,14 +108,14 @@ addressList
   .forEach((address) => {
     timeSortListAsc.push(address);
   });
-console.log("最新登録順(昇順)", timeSortListAsc);
+console.log("最新登録順(降順・desc)", timeSortListAsc);
 
 console.log("--------------------------");
 
-/** 古い順(降順) で、Sortされた配列 */
+/** 古い順(昇順) で、Sortされた配列 */
 const timeSortListDesc = [];
 
-// 古い順(降順): addressList の create_time を基準に Sort して timeSortList に pushする
+// 3. 古い順(昇順): addressList の create_time を基準に「古い順(昇順)」で Sort して timeSortList に pushする
 addressList
   .sort((a, b) => {
     return a.create_time < b.create_time ? -1 : 1;
@@ -129,4 +123,4 @@ addressList
   .forEach((address) => {
     timeSortListDesc.push(address);
   });
-console.log("古い順(降順)", timeSortListDesc);
+console.log("古い順(昇順・asc)", timeSortListDesc);

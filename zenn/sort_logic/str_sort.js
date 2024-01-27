@@ -1,4 +1,4 @@
-/** 都道府県 DataSet name: 漢字, ruby: ひらがな */
+/** 1. 都道府県 DataSet を用意する (name: 漢字, ruby: ひらがな)  */
 const proviceItems = [
   { name: "北海道", ruby: "ほっかいどう" },
   { name: "青森県", ruby: "あおもりけん" },
@@ -49,25 +49,21 @@ const proviceItems = [
   { name: "沖縄県", ruby: "おきなわけん" },
 ];
 
-// 都道府県 を基準に あいうえお順 で Sort する
+// 2. 事前に、都道府県の読み仮名(ruby: ひらがな) を基準に あいうえお順 で Sort する
 proviceItems.sort((a, b) => a.ruby.localeCompare(b.ruby), "ja");
 console.log("proviceItems", proviceItems);
 
-/**
- * NOTE: 並び替え Box (Sort Select Box)
- * 1. あいうえお順
- *    - 都道府県名 を基準に あいうえお順 で Sort する
- */
+/** 3. 並び替えたい 対象の DataSet (送付先リスト) */
 const addressList = [
   {
     user_id: "1000020339",
     city: "渋谷区",
-    full_name: "ロボ ロボ玉",
+    full_name: "ロボ ロボたま",
     address_line1: "",
     address_line2: null,
     building: "",
     district: "ハチ公前",
-    first_name: "ロボ玉",
+    first_name: "ロボたま",
     last_name: "ロボ",
     input_type: 2,
     post_code: "111-0078",
@@ -137,7 +133,7 @@ const addressList = [
   },
   {
     user_id: "1000020339",
-    city: "上尾市",
+    city: "さいたま市",
     full_name: "ぷる たま",
     address_line1: "",
     address_line2: null,
@@ -158,21 +154,25 @@ const addressList = [
 
 // 都道府県 を基準に あいうえお順 で Sort する
 addressList.sort((addressA, addressB) => {
-  /** 都道府県 */
+  /** 都道府県名 A */
   const provinceA = addressA.province;
+  console.log("都道府県 Part A", provinceA);
+  /** 都道府県名 B */
   const provinceB = addressB.province;
+  console.log("都道府県 Part B", provinceB);
 
-  /** あいうえお順で並んだ際の順序(番号) */
+  /** 都道府県名 A の index(あいうえお順で並んでいる番号) */
   const orderindexA = proviceItems.findIndex(
     (provice) => provice.name === provinceA
   );
-  /** あいうえお順で並んだ際の順序(番号) */
+  /** 都道府県名 B の index(あいうえお順で並んでいる番号) */
   const orderindexB = proviceItems.findIndex(
     (provice) => provice.name === provinceB
   );
   console.log("あいうえお順で並んだ際の順序(番号) Part A", orderindexA);
   console.log("あいうえお順で並んだ際の順序(番号) Part B", orderindexB);
 
+  // 昇順ソート(あいうえお順)
   return orderindexA - orderindexB;
 });
 
