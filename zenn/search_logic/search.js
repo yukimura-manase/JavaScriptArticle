@@ -1,22 +1,14 @@
-/**
- * NOTE: フリー検索 Box の検索処理
- * - 配送先(住所)リスト 内を フリー検索できる
- * - 検索条件に部分一致する 配送先リストだけを表示する
- * - アドレス (住所・文字列) との部分一致
- * - フルネームとの部分一致
- * - 電話番号との部分一致
- */
-
+/** ユーザーの送付先(住所)リスト */
 const addressList = [
   {
     user_id: "1000020339",
     city: "渋谷区",
-    full_name: "ロボ ロボ玉",
+    full_name: "ロボ ロボたま",
     address_line1: "",
     address_line2: null,
     building: "",
     district: "ハチ公前",
-    first_name: "ロボ玉",
+    first_name: "ロボたま",
     last_name: "ロボ",
     input_type: 2,
     post_code: "111-0078",
@@ -86,7 +78,7 @@ const addressList = [
   },
   {
     user_id: "1000020339",
-    city: "上尾市",
+    city: "さいたま市",
     full_name: "ぷる たま",
     address_line1: "",
     address_line2: null,
@@ -106,34 +98,52 @@ const addressList = [
 ];
 
 /** 検索・文字列 */
-const searchQuery = "白桃";
+const searchQuery = "東";
+// const searchQuery = "たま";
 
-/** 検索に部分一致する 送付先(住所)リスト */
-const matchAddressList = [];
+/**
+ * NOTE: フリー検索 Box の検索処理
+ * - 配送先(住所)リスト 内を フリー検索できる
+ * - 検索条件に部分一致する 配送先リストだけを表示する
+ * - アドレス (住所・文字列) との部分一致
+ * - フルネームとの部分一致
+ * - 電話番号との部分一致
+ * @param {Array} addressList 送付先(住所)リスト
+ * @param {String} searchQuery 検索・文字列
+ * @return {Array} 部分一致する 送付先(住所)リスト
+ */
+const searchFunction = (addressList, searchQuery) => {
+  /** 検索に部分一致する 送付先(住所)リスト */
+  const matchAddressList = [];
 
-/** 部分一致パターン・正規表現 */
-let searchQueryRegExp = new RegExp(searchQuery);
-console.log("searchQueryRegExp", searchQueryRegExp);
+  /** 部分一致パターン・正規表現 */
+  let searchQueryRegExp = new RegExp(searchQuery);
+  console.log("searchQueryRegExp", searchQueryRegExp);
 
-// 送付先(住所) を 1つずつ検索する
-addressList.forEach((address) => {
-  /** 送付先(住所) */
-  const addressStr = `${address.province}${address.city}${address.district} ${address.building} ${address.address_line1}`;
-  /** フルネーム */
-  const fullName = address.full_name;
-  /** 電話番号 */
-  const telNumber = address.phone_number;
+  // 送付先(住所) を 1つずつ検索する
+  addressList.forEach((address) => {
+    /** 送付先(住所) */
+    const addressStr = `${address.province}${address.city}${address.district} ${address.building} ${address.address_line1}`;
+    /** フルネーム */
+    const fullName = address.full_name;
+    /** 電話番号 */
+    const telNumber = address.phone_number;
 
-  // 検索文字列が 送付先(住所)・フルネーム・電話番号 の文字列と、部分一致するかどうかを判定する
-  const isMatch =
-    searchQueryRegExp.test(addressStr) ||
-    searchQueryRegExp.test(fullName) ||
-    searchQueryRegExp.test(telNumber);
+    // 検索文字列が 送付先(住所)・フルネーム・電話番号 の文字列と、部分一致するかどうかを判定する
+    const isMatch =
+      searchQueryRegExp.test(addressStr) ||
+      searchQueryRegExp.test(fullName) ||
+      searchQueryRegExp.test(telNumber);
 
-  // 部分一致する 送付先(住所)リスト を追加する
-  if (isMatch) {
-    matchAddressList.push(address);
-  }
-});
+    // 部分一致する 送付先(住所)リスト を追加する
+    if (isMatch) {
+      matchAddressList.push(address);
+    }
+  });
+
+  return matchAddressList;
+};
+
+const matchAddressList = searchFunction(addressList, searchQuery);
 
 console.log("検索結果のリスト", matchAddressList);
