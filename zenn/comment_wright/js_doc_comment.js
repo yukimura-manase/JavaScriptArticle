@@ -13,9 +13,22 @@ function makeRundom(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+const result = makeRundom(1, 12);
+console.log(result); // 1 〜 12 の乱数
+
+/**
+ * NOTE: 日付をロケール文字列に変換する関数
+ * @function toLocaleDate - 日付のロケール文字列変換
+ * @params {Date} date - 日付
+ * @return {string} ロケール文字列
+ */
+const toLocaleDate = (date) =>
+  `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+
 // Type2. クラスに対するコメント
 
 /**
+ * TODO: クラスにメソッドを追加する
  * NOTE: クラスの説明
  * @class
  */
