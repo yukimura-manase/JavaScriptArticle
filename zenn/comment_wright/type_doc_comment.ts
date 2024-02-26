@@ -1,8 +1,6 @@
-/** プロファイリングサマリー Model */
-export interface ProfilingSummary {
+/** プロファイリング Model */
+export interface Profiling {
   id: number;
-  insta_user_id: string;
-  text_s3_url: string;
   create_time: string;
   /**
    * NOTE: 更新日時
@@ -11,18 +9,16 @@ export interface ProfilingSummary {
    */
   update_time: string;
   deleted: 1 | 0;
-  /** プロファイリング・サマリー本文 */
-  text?: string;
+  /** プロファイリング本文 */
+  text: string;
 }
 
-const profilingSummary: ProfilingSummary = {
+const profiling: Profiling = {
   id: 1,
-  insta_user_id: "1234567890",
-  text_s3_url: "https://s3.amazonaws.com/bucket_name/key_name",
   create_time: "2024/01/01 00:00:00",
   update_time: "2024/01/01 00:00:00",
   deleted: 1,
   text: "text",
 };
 
-const update_time = profilingSummary.update_time;
+const update_time = profiling.update_time;
